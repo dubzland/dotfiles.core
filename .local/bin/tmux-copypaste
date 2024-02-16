@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#
+# Dirty shell script to (hopefully) allow cross-platform clipboard sharing
+# between tmux and the rest of the world.
+#
+# Instead of OS checks, this script looks for various executables known to
+# provide clipboard functionality to the shell.  It will also run
+# reattach-to-user-namespace if it exists, so OSX should be happy.
+#
+# Relavent lines in .tmux.conf:
+#
+#  copy:
+#    bind-key -t vi-copy y copy-selection
+#    bind C-y run "tmux show-buffer | tmux-copypaste copy"
+#
+#  paste:
+#    bind p paste-buffer
+#    bind C-p run "tmux set-buffer \"$(tmux-copypaste paste)\"; tmux paste-buffer"
+#
+# Version 1.8 of tmux has copy-pipe, which makes all of this much cleaner, but
+# Ubuntu 12.04 (precise) still ships with ~1.6.
+#
+
+script="${0##*/}"
+
+fatal() {
+		printf "$script"': %s\n' "$*"
+		exit 1
+}
+
+cmd=""
+args=""
+case "$1" in
+	"copy" )
+		if [ $(command -v pbcopy) ]; then
+			cmd="pbcopy"
+		elif [ $(command -v xclip) ]; then
+			cmd="xclip"
+			args=(-i -selection clipboard)
+		elif [ $(command -v xsel) ]; then
+			cmd="xsel"
+			args=(-ib)
+		else
+			fatal "No clipboard utility found for copy."
+		fi
+		;;
+	"paste" )
+		if [ $(command -v pbpaste) ]; then
+			cmd="pbpaste"
+		elif [ $(command -v xclip) ]; then
+			cmd="xclip"
+			args=(-selection clipboard -o)
+		elif [ $(command -v xsel) ]; then
+			cmd="xsel"
+			args=(-ob)
+		else
+			fatal "No clipboard utility found for paste."
+		fi
+		;;
+	* )
+		fatal "Unknown command."
+		;;
+esac
+
+#echo "CMD: ${cmd} ${args[@]}" > tmux_command.txt
+exec "$cmd" ${args[@]} > ~/.tmux_copypaste.log 2>&1

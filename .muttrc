@@ -1,0 +1,42 @@
+# A basic .muttrc for use with Gmail
+
+# Change the following six lines to match your Gmail account details
+set imap_user = "joshw@firma8.com"
+set imap_pass = "<secret>"
+set smtp_url = "smtp://joshw@firma8.com@smtp.gmail.com:587/"
+set smtp_pass = "<secret>"
+set from = "joshw@firma8.com"
+set realname = "Josh Williams"
+
+# Change the following line to a different editor you prefer.
+set editor = "vim"
+
+# Basic config, you can leave this as is
+set folder = "imaps://imap.gmail.com"
+set spoolfile = "imaps://imap.gmail.com/INBOX"
+set postponed = "imaps://imap.gmail.com/[Gmail]/Drafts"
+set mbox = "imaps://imap.gmail.com/[Gmail]/All Mail"
+set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
+set record=""
+set imap_check_subscribed
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set move = no
+set include
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+set pager_index_lines=7
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+
+source ~/.mutt/bindings
+source ~/.mutt/colors
