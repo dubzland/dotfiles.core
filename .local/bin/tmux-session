@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+
+function die {
+	printf "$*\n" 1>&2
+	exit 1
+}
+
+# Use fzf to select from a list of entries
+function _select_from_list {
+	local selected=$(echo "$@" | fzf --layout=reverse --border --margin=1 --padding=1 --height 40%)
+	echo "$selected"
+}
+
+# List current tmux sessions.
+function tmux_session_list {
+	tmux list-sessions
+}
+
+# List available tmux targets.
+function tmux_session_targets {
+	find ~/code/gitlab ~/code/github ~/code/ansible/collections/ansible_collections/ -mindepth 2 -maxdepth 2 -type d
+}
+
+# Load an existing tmux session.  Works even if we aren't in a tmux session.
+function tmux_session_load {
+	local session="$1"
+	local tmux_active=$(pgrep tmux)
+
+	if [[ -z $TMUX ]]; then
+		tmux attach-session -t "$session"
+	else
+		tmux switch-client -t "$session"
+	fi
+}
+
+# Switch to a running tmux session.
+function tmux_session_switch {
+	local sessions=$(tmux_session_list)
+	if [[ ${#sessions[@]} -eq 0 ]]; then
+		die "No sessions available."
+	fi
+
+	selected="$(_select_from_list "${sessions[@]}")"
+	session="${selected%%:*}"
+
+	if [[ -z "${session}" ]]; then
+		exit 0
+	fi
+
+	tmux_session_load "$session"
+}
+
+# Create a new tmux session.  If a session already exists for the target, loads
+# it instead.
+function tmux_session_new {
+	local directory="$1"
+	shift
+
+	# If a directory wasn't passed in, show a list of targets
+	if [[ -z "${directory}" ]]; then
+		local targets="$(tmux_session_targets)"
+		local directory="$(_select_from_list "${targets[@]}")"
+	fi
+
+	# If we still don't have a directory, just exit (user hit escape)
+	if [[ -z "${directory}" ]]; then
+		exit 0
+	fi
+
+	# Convert the directory to a valid session name
+	local name="${directory##*/}"
+	name="${name/\./_}"
+
+	# If a session isn't running, start one
+	if ! $(tmux has-session -t="$name" 2> /dev/null); then
+		local tmux_args=(-s "$name" -c "$directory")
+		if [[ -n $(pgrep tmux) ]]; then
+			tmux_args+=(-d)
+		fi
+
+		tmux new-session "${tmux_args[@]}"
+
+		# If any additional args were passed, assume they're a default command
+		if [[ $# -gt 0 ]]; then
+			tmux send-keys -t "$name":0.0 "$@" C-m
+		fi
+	fi
+
+	# Finally, actually load the session
+	tmux_session_load "$name"
+}
+
+function usage() {
+	echo "Commands:"
+	echo "  $(basename $0) list     Display a list of running sessions"
+	echo "  $(basename $0) new      Create a new tmux session"
+	echo "  $(basename $0) switch   Activate an existing tmux session"
+	echo "  $(basename $0) load     Load an existing tmux session"
+	echo "  $(basename $0) targets  Display a list of tmux targets"
+}
+
+progname=$(basename "$0")
+
+case "$1" in
+	"" | "-h" | "--help")
+		usage
+		exit 0
+		;;
+	*)
+		subcommand="$1"
+		shift
+		if [[ $(type -t "tmux_session_$subcommand") == function ]]; then
+			tmux_session_$subcommand "$@"
+		else
+			echo "Error: '$subcommand' is not a valid subcommand." >&2
+			echo -e "  Run '$progname --help' for a list of valid subcommands." >&2
+			exit 1
+		fi
+		;;
+esac
+
+# vim: set noet ts=4 sw=4 sts=4 ft=sh:

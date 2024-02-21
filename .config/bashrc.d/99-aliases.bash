@@ -5,6 +5,9 @@ alias reboot='sudo /sbin/reboot'
 alias top='sudo top'
 alias nview='nvim -R'
 alias chownr='sudo find . \! -user jdubz | sudo xargs -I{} -- chown jdubz: {}'
+alias tss='tmux-session switch'
+alias tsn='tmux-session new'
+alias tdev='tmux-session new "$(pwd)" nvim'
 
 if which dircolors >/dev/null; then
 	# Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
