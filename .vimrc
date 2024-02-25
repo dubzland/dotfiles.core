@@ -7,16 +7,15 @@ filetype plugin indent on
 syntax on
 
 " Plugins ------------- {{{
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/vim/site/plugged')
 Plug 'Konfekt/FastFold'
-Plug 'scrooloose/nerdtree'
 Plug 'tinted-theming/base16-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
 Plug 'vadimr/bclose.vim'
+Plug 'mbbill/undotree'
 call plug#end()
 " }}}
 
@@ -52,6 +51,9 @@ set virtualedit+=block
 
 set foldmethod=marker
 " set history=1000
+set noswapfile
+set nobackup
+set undodir = "~/.local/share/vim/undodir"
 set undofile
 set undoreload=10000
 set list
@@ -92,7 +94,7 @@ set omnifunc=syntaxcomplete#Complete
 " }}}
 
 " Formatting ---------- {{{
-set statusline=[%n]\ %f\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%{fugitive#statusline()}%=%c,%l/%L\ %P
+silent! set statusline=[%n]\ %f\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%{fugitive#statusline()}%=%c,%l/%L\ %P
 
 augroup cursor_line
 	au!
@@ -115,49 +117,12 @@ endif
 
 autocmd QuickFixCmdPost [^l]* cwindow
 
-" Bindings ------------ {{{
-let mapleader = ","
-let g:mapleader = ","
-
-" Move between splits
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-if has('nvim')
-	noremap <BS> <C-w>h
-endif
-
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-nmap <F3> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeFocus<CR>
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
-" Leaders {{{
-noremap <silent> <leader><space> :noh<CR>:call clearmatches()<CR>
-noremap <leader>q :Bclose<CR>
-noremap <leader>c :cclose<CR>
-noremap <Leader>d :filetype detect<CR>
-" }}}
-
-nnoremap <C-W>M <C-W>\|<C-W>_
-nnoremap <C-W>m <C-W>=
-" }}}
-
-" Searching and cursor movement{{{
-nnoremap / /\v
-vnoremap / /\v
-" }}}
-
 " Colors -------------- {{{
 set termguicolors
 if exists('$BASE16_THEME')
     \ && (!exists('g:colors_name')
     \ || g:colors_name != 'base16-$BASE16_THEME')
   let base16colorspace=256
-  colorscheme base16-$BASE16_THEME
+  silent! colorscheme base16-$BASE16_THEME
 endif
 " }}}
