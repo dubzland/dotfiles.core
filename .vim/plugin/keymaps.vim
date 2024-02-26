@@ -46,6 +46,7 @@ nnoremap <C-W>M <C-W>Pipe<C-W>
 " {{{ Fugitive
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gv :Gvdiffsplit<CR>
 nnoremap <leader>gp :execute 'Git push origin '.FugitiveHead()<CR>
 " }}}
