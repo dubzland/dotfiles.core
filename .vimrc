@@ -8,7 +8,6 @@ syntax on
 
 " Plugins ------------- {{{
 call plug#begin('~/.local/share/vim/site/plugged')
-Plug 'Konfekt/FastFold'
 Plug 'tinted-theming/base16-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
