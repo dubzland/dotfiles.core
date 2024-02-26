@@ -1,1 +1,1 @@
-/home/jdubz/.local/share/vim/plugged/vim-plug/plug.vim
+../../.local/share/vim/plugged/vim-plug/plug.vim
