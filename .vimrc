@@ -16,6 +16,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vadimr/bclose.vim'
 Plug 'mbbill/undotree'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}
 
