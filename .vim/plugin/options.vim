@@ -95,12 +95,10 @@ autocmd QuickFixCmdPost [^l]* cwindow
 
 " Colors -------------- {{{
 set termguicolors
-if exists('$BASE16_THEME')
-    \ && (!exists('g:colors_name')
-    \ || g:colors_name != 'base16-$BASE16_THEME')
+if filereadable(expand("$HOME/.config/tinted-theming/set_theme.vim"))
   let base16_background_transparent=1
   let base16_colorspace=256
-  silent! colorscheme base16-$BASE16_THEME
+  source $HOME/.config/tinted-theming/set_theme.vim
 endif
 " }}}
 
