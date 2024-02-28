@@ -14,7 +14,7 @@ MacOS).
 On MacOS, install Alacritty per the [docs][alacritty-install], then install the
 Alacritty terminfo:
 
-```console
+```bash
 curl -o ~/alacritty.info https://github.com/alacritty/alacritty/blob/master/extra/alacritty.info && \
 sudo tic -xe alacritty,alacritty-direct ~/alacritty.info && \
 rm ~/alacritty.info
