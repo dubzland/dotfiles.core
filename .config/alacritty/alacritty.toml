@@ -1,4 +1,3 @@
-[general]
 import = ["~/.local/share/base16-alacritty/colors/base16-helios-256.toml"]
 
 [font]
