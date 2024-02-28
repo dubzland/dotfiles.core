@@ -1,5 +1,5 @@
 [general]
-import = ["~/.config/alacritty/base16-onedark-256.toml"]
+import = ["~/.local/share/base16-alacritty/colors/base16-helios-256.toml"]
 
 [font]
 size = 10.0
