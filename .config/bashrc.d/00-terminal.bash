@@ -31,7 +31,7 @@ fi
 unset local256
 
 # Terminfo overrides
-export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
+export TERMINFO_DIRS=$TERMINFO_DIRS:"${XDG_DATA_HOME:-$HOME/.local/share}/terminfo"
 
 # Change the window title of X terminals
 case $TERM in
@@ -44,8 +44,9 @@ case $TERM in
 esac
 
 # Base16 Shell
+BASE16_SHELL_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/base16-shell"
 BASE16_THEME_DEFAULT="helios"
-BASE16_SHELL_PATH="$HOME/.local/share/base16-shell"
+BASE16_SHELL_HOOKS_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/tinted-theming/hooks"
 [[ -n "$PS1" ]] && \
   [[ -s "$BASE16_SHELL_PATH/profile_helper.sh" ]] && \
       source "$BASE16_SHELL_PATH/profile_helper.sh"

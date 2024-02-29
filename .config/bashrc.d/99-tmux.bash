@@ -8,4 +8,6 @@ if [ -n "$DISPLAY" ]; then
 	fi
 fi
 
+export BASE16_TMUX_OPTION_STATUSBAR=1
+
 # vim: set et ts=4 sw=4 sts=4 ft=sh:
