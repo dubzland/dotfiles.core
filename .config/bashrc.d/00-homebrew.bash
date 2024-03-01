@@ -1,6 +1,6 @@
 # Homebrew on Linux
 if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # Homebrew on MacOS

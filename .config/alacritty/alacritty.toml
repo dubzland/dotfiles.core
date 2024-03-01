@@ -1,4 +1,4 @@
-import = ["~/.local/share/base16-alacritty/colors/base16-helios-256.toml"]
+import = ["~/.config/alacritty/theme.toml"]
 
 [font]
 size = 10.0
