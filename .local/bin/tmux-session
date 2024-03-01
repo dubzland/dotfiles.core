@@ -81,9 +81,9 @@ function tmux_session_new {
 		tmux new-session "${tmux_args[@]}"
 
 		# If any additional args were passed, assume they're a default command
-		if [[ $# -gt 0 ]]; then
-			tmux send-keys -t "$name":0.0 "$@" C-m
-		fi
+		# if [[ $# -gt 0 ]]; then
+		# 	tmux send-keys -t "$name":0.0 "$@" C-m
+		# fi
 	fi
 
 	# Finally, actually load the session
