@@ -1,4 +1,5 @@
 # Base16 Shell
+BASE16_SHELL_ENABLE_VARS=1
 BASE16_SHELL_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/base16-shell"
 BASE16_THEME_DEFAULT="helios"
 BASE16_SHELL_HOOKS_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/tinted-theming/hooks"
