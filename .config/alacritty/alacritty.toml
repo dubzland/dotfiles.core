@@ -4,7 +4,7 @@ import = ["~/.config/alacritty/theme.toml"]
 size = 10.0
 
 [font.normal]
-family = "SauceCodePro Nerd Font Mono"
+family = "RobotoMono Nerd Font Mono"
 
 [window]
 opacity = 0.9
