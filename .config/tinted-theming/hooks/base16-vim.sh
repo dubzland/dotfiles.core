@@ -1,1 +1,0 @@
-../../base16-shell/hooks/base16-vim.sh
