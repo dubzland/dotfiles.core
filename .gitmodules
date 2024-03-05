@@ -4,9 +4,6 @@
 [submodule ".config/base16-shell"]
 	path = .config/base16-shell
 	url = https://github.com/tinted-theming/base16-shell
-[submodule ".config/tinted-theming/base16-alacritty"]
-	path = .config/tinted-theming/base16-alacritty
-	url = https://github.com/aarowill/base16-alacritty
 [submodule ".config/tinted-theming/base16-fzf"]
 	path = .config/tinted-theming/base16-fzf
 	url = https://github.com/tinted-theming/base16-fzf
